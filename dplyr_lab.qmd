@@ -124,19 +124,23 @@ kable(table_target_marital, caption = "Admission grade median conditioned both o
 ### Question  3
 
 ```{r}
-media_curricular_by_gender <- dropout %>% 
-  group_by(Gender) %>%
-  summarize(median_cu_1st_ap = median(`Curricular units 1st sem (approved)`),
-         median_cu_1st_en = median(`Curricular units 1st sem (enrolled)`),
-         median_cu_1st_ev = median(`Curricular units 1st sem (evaluations)`),
-         median_cu_1st_gr = median(`Curricular units 1st sem (grade)`),
-         median_cu_1st_we = median(`Curricular units 1st sem (without evaluations)`),
-         median_cu_1st_cr = median(`Curricular units 1st sem (credited)`),
-         median_cu_2nd_cr = median(`Curricular units 2nd sem (credited)`),
-         median_cu_2nd_en = median(`Curricular units 2nd sem (enrolled)`),
-         median_cu_2nd_ev = median(`Curricular units 2nd sem (evaluations)`),
-         median_cu_2nd_ap = median(`Curricular units 2nd sem (approved)`),
-         median_cu_2nd_we = median(`Curricular units 2nd sem (without evaluations)`))
+media_curricular_by_gender <- dropout %>%
+  pivot_longer(
+    cols = starts_with("Curricular units"),
+    names_to = "Curricular",
+    values_to = "Value") %>%
+  group_by(Gender, Curricular) %>%
+  summarize(conditioned_median = median(Value), .groups = 'drop')
+  
+```
+
+### Question 4 
+
+```{r}
+table_gender_curricular <- media_curricular_by_gender %>%
+  pivot_wider(names_from = Gender, values_from = conditioned_median)
+
+kable(table_gender_curricular, caption = "Curricular variable median conditioned on the Genders")
 ```
 
 
