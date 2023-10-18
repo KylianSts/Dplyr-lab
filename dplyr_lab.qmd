@@ -121,3 +121,22 @@ table_target_marital <- median_admision_grade_by_target_and_marital_status %>%
 kable(table_target_marital, caption = "Admission grade median conditioned both on the Target vraiable and on the Marital status")
 ```
 
+### Question  3
+
+```{r}
+media_curricular_by_gender <- dropout %>% 
+  group_by(Gender) %>%
+  summarize(median_cu_1st_ap = median(`Curricular units 1st sem (approved)`),
+         median_cu_1st_en = median(`Curricular units 1st sem (enrolled)`),
+         median_cu_1st_ev = median(`Curricular units 1st sem (evaluations)`),
+         median_cu_1st_gr = median(`Curricular units 1st sem (grade)`),
+         median_cu_1st_we = median(`Curricular units 1st sem (without evaluations)`),
+         median_cu_1st_cr = median(`Curricular units 1st sem (credited)`),
+         median_cu_2nd_cr = median(`Curricular units 2nd sem (credited)`),
+         median_cu_2nd_en = median(`Curricular units 2nd sem (enrolled)`),
+         median_cu_2nd_ev = median(`Curricular units 2nd sem (evaluations)`),
+         median_cu_2nd_ap = median(`Curricular units 2nd sem (approved)`),
+         median_cu_2nd_we = median(`Curricular units 2nd sem (without evaluations)`))
+```
+
+
