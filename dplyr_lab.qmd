@@ -50,5 +50,15 @@ nb_artist_per_year <- spotify %>%
 kable(nb_artist_per_year, caption = "Distinct Artists per Year")
 ```
 
- 
+### Question 3 
+
+```{r}
+most_popular_artist <- spotify %>% 
+  group_by(artist) %>%
+  summarize(number_of_songs = n_distinct(song)) %>%
+  slice_max(order_by = number_of_songs)
+
+cat("The most popular artist in the dataset is", most_popular_artist$artist, "with", most_popular_artist$number_of_songs, "songs.")
+```
+
 
