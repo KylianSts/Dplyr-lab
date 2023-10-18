@@ -78,4 +78,15 @@ genre_summary <- spotify %>%
 kable(genre_summary, caption = "Summary of Tempo by Genre")
 ```
 
+### Question 5 
 
+```{r}
+mean_livness_and_danceability_by_year <- spotify %>% 
+  group_by(year) %>%
+  summarize(mean_livness = mean(tempo, na.rm = TRUE),
+            mean_danceability = mean(tempo, na.rm = TRUE))
+  
+kable(mean_livness_and_danceability_by_year, caption = "Mean of livness and danceability by genre.")
+```
+
+We see that throughout year, music tend to be more danceable and more liveable.
