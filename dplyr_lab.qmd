@@ -61,4 +61,21 @@ most_popular_artist <- spotify %>%
 cat("The most popular artist in the dataset is", most_popular_artist$artist, "with", most_popular_artist$number_of_songs, "songs.")
 ```
 
+### Question 4 
+
+```{r}
+genre_summary <- spotify %>%
+  group_by(genre) %>%
+  distinct(artist, song, .keep_all = TRUE) %>%
+  summarize(
+    min_tempo = min(tempo, na.rm = TRUE),
+    max_tempo = max(tempo, na.rm = TRUE),
+    mean_tempo = mean(tempo, na.rm = TRUE),
+    median_tempo = median(tempo, na.rm = TRUE),
+    num_songs = n_distinct(artist, song)
+  )
+
+kable(genre_summary, caption = "Summary of Tempo by Genre")
+```
+
 
