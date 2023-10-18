@@ -1,6 +1,43 @@
 ---
 title: "Dplyr lab"
 author: "Kylian Santos"
-format: html
+format: 
+  html : default
+  pdf : default
 editor: visual
 ---
+
+```{r configuration}
+#| message: false
+
+here::i_am("Dplyr-lab.Rproj")
+
+library(here)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+
+spotify <- readRDS("top-spotify-hits-2000-2019.Rds")
+dropout <- readRDS("dropout.Rds")
+```
+
+## Exercise 1 
+
+### Question 1 
+
+```{r}
+#| echo: false
+#| message: false
+
+nb_song_name <- spotify %>% distinct(song) |> nrow()
+
+nb_song <- spotify %>% distinct(artist, song) |> nrow()
+
+nb_artist <- spotify %>% distinct(artist) |> nrow()
+
+nb_genre <- spotify %>% distinct(genre) |> nrow()
+
+cat("There are in this data base :", nb_song_name, " different song names, but there are in reality :", nb_song, "different songs, make by :", nb_artist, " different artists. Moreover, there are :", nb_genre, " different genres in this spotify data base.")
+```
+ 
+
