@@ -16,9 +16,12 @@ library(here)
 library(ggplot2)
 library(dplyr)
 library(knitr)
+library(tidyr)
 
 spotify <- readRDS("top-spotify-hits-2000-2019.Rds")
 dropout <- readRDS("dropout.Rds")
+
+theme_set(theme_bw())
 ```
 
 ## Exercise 1 
@@ -66,7 +69,7 @@ cat("The most popular artist in the dataset is", most_popular_artist$artist, "wi
 ```{r}
 genre_summary <- spotify %>%
   group_by(genre) %>%
-  distinct(artist, song, .keep_all = TRUE) %>%
+  #distinct(artist, song, .keep_all = TRUE) %>%
   summarize(
     min_tempo = min(tempo, na.rm = TRUE),
     max_tempo = max(tempo, na.rm = TRUE),
@@ -83,10 +86,19 @@ kable(genre_summary, caption = "Summary of Tempo by Genre")
 ```{r}
 mean_livness_and_danceability_by_year <- spotify %>% 
   group_by(year) %>%
-  summarize(mean_livness = mean(tempo, na.rm = TRUE),
-            mean_danceability = mean(tempo, na.rm = TRUE))
+  summarize(mean_livness = mean(liveness, na.rm = TRUE),
+            mean_danceability = mean(danceability, na.rm = TRUE))
   
 kable(mean_livness_and_danceability_by_year, caption = "Mean of livness and danceability by genre.")
 ```
 
-We see that throughout year, music tend to be more danceable and more liveable.
+
+### Question 6 
+
+```{r}
+mean_livness_and_danceability_by_year |>
+  pivot_longer(-year, names_to = "liveness_and_danceability", values_to = "mean") |>
+ggplot(aes(x=year, y=mean, color= liveness_and_danceability)) +
+  geom_line(lwd = 1.5)
+```
+
