@@ -107,6 +107,7 @@ ggplot(aes(x=year, y=mean, color= liveness_and_danceability)) +
 ### Question 1 
 
 ```{r}
-
+median_admision_grade_by_target_and_marital_status <- dropout %>% 
+  group_by(Target,`Marital status`) %>%
+  summarize(conditioned_median = median(`Admission grade`), .groups = 'drop')
 ```
-
