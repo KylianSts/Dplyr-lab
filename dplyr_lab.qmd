@@ -39,5 +39,16 @@ nb_genre <- spotify %>% distinct(genre) |> nrow()
 
 cat("There are in this data base :", nb_song_name, " different song names, but there are in reality :", nb_song, "different songs, make by :", nb_artist, " different artists. Moreover, there are :", nb_genre, " different genres in this spotify data base.")
 ```
+### Question 2 
+
+```{r}
+nb_artist_per_year <- spotify %>%
+  group_by(year) %>%
+  distinct(artist) %>%
+  summarize(artist_count = n())
+
+kable(nb_artist_per_year, caption = "Distinct Artists per Year")
+```
+
  
 
