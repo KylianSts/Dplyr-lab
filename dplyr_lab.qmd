@@ -111,3 +111,13 @@ median_admision_grade_by_target_and_marital_status <- dropout %>%
   group_by(Target,`Marital status`) %>%
   summarize(conditioned_median = median(`Admission grade`), .groups = 'drop')
 ```
+
+### Question 2 
+
+```{r}
+table_target_marital <- median_admision_grade_by_target_and_marital_status %>%
+  pivot_wider(names_from = Target, values_from = conditioned_median)
+
+kable(table_target_marital, caption = "Admission grade median conditioned both on the Target vraiable and on the Marital status")
+```
+
