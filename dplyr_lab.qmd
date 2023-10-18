@@ -5,11 +5,13 @@ format:
   html : default
   pdf : default
 editor: visual
+knitr:
+  opts_chunk:
+    echo: FALSE
+    message: FALSE
 ---
 
 ```{r configuration}
-#| message: false
-
 here::i_am("Dplyr-lab.Rproj")
 
 library(here)
@@ -29,9 +31,6 @@ theme_set(theme_bw())
 ### Question 1 
 
 ```{r}
-#| echo: false
-#| message: false
-
 nb_song_name <- spotify %>% distinct(song) |> nrow()
 
 nb_song <- spotify %>% distinct(artist, song) |> nrow()
@@ -100,5 +99,14 @@ mean_livness_and_danceability_by_year |>
   pivot_longer(-year, names_to = "liveness_and_danceability", values_to = "mean") |>
 ggplot(aes(x=year, y=mean, color= liveness_and_danceability)) +
   geom_line(lwd = 1.5)
+```
+
+
+## Exercise 2 
+
+### Question 1 
+
+```{r}
+
 ```
 
