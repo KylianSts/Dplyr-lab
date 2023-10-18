@@ -1,0 +1,6 @@
+---
+title: "Dplyr lab"
+author: "Kylian Santos"
+format: html
+editor: visual
+---
