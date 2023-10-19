@@ -31,22 +31,24 @@ theme_set(theme_bw())
 ### Question 1 
 
 ```{r}
-nb_song_name <- spotify %>% distinct(song) |> nrow()
+nb_song_name <- spotify |> distinct(song) |> nrow()
 
-nb_song <- spotify %>% distinct(artist, song) |> nrow()
+nb_song <- spotify |> distinct(artist, song) |> nrow()
 
-nb_artist <- spotify %>% distinct(artist) |> nrow()
+nb_artist <- spotify |> distinct(artist) |> nrow()
 
-nb_genre <- spotify %>% distinct(genre) |> nrow()
+nb_genre <- spotify |> distinct(genre) |> nrow()
 
-cat("There are in this data base :", nb_song_name, " different song names, but there are in reality :", nb_song, "different songs, make by :", nb_artist, " different artists. Moreover, there are :", nb_genre, " different genres in this spotify data base.")
+cat("There are in this database:", nb_song_name, "different song names,\n")
+cat("but there are in reality:", nb_song, "different songs, made by", nb_artist, "different artists.\n")
+cat("Moreover, there are:", nb_genre, "different genres in this Spotify database.\n")
 ```
 ### Question 2 
 
 ```{r}
-nb_artist_per_year <- spotify %>%
-  group_by(year) %>%
-  distinct(artist) %>%
+nb_artist_per_year <- spotify |>
+  group_by(year) |>
+  distinct(artist) |>
   summarize(artist_count = n())
 
 kable(nb_artist_per_year, caption = "Distinct Artists per Year")
@@ -55,9 +57,9 @@ kable(nb_artist_per_year, caption = "Distinct Artists per Year")
 ### Question 3 
 
 ```{r}
-most_popular_artist <- spotify %>% 
-  group_by(artist) %>%
-  summarize(number_of_songs = n_distinct(song)) %>%
+most_popular_artist <- spotify |>
+  group_by(artist) |>
+  summarize(number_of_songs = n_distinct(song)) |>
   slice_max(order_by = number_of_songs)
 
 cat("The most popular artist in the dataset is", most_popular_artist$artist, "with", most_popular_artist$number_of_songs, "songs.")
@@ -66,8 +68,8 @@ cat("The most popular artist in the dataset is", most_popular_artist$artist, "wi
 ### Question 4 
 
 ```{r}
-genre_summary <- spotify %>%
-  group_by(genre) %>%
+genre_summary <- spotify |>
+  group_by(genre) |>
   #distinct(artist, song, .keep_all = TRUE) %>%
   summarize(
     min_tempo = min(tempo, na.rm = TRUE),
@@ -83,8 +85,8 @@ kable(genre_summary, caption = "Summary of Tempo by Genre")
 ### Question 5 
 
 ```{r}
-mean_livness_and_danceability_by_year <- spotify %>% 
-  group_by(year) %>%
+mean_livness_and_danceability_by_year <- spotify |>
+  group_by(year) |>
   summarize(mean_livness = mean(liveness, na.rm = TRUE),
             mean_danceability = mean(danceability, na.rm = TRUE))
   
@@ -107,15 +109,15 @@ ggplot(aes(x=year, y=mean, color= liveness_and_danceability)) +
 ### Question 1 
 
 ```{r}
-median_admision_grade_by_target_and_marital_status <- dropout %>% 
-  group_by(Target,`Marital status`) %>%
+median_admision_grade_by_target_and_marital_status <- dropout |>
+  group_by(Target,`Marital status`) |>
   summarize(conditioned_median = median(`Admission grade`), .groups = 'drop')
 ```
 
 ### Question 2 
 
 ```{r}
-table_target_marital <- median_admision_grade_by_target_and_marital_status %>%
+table_target_marital <- median_admision_grade_by_target_and_marital_status |>
   pivot_wider(names_from = Target, values_from = conditioned_median)
 
 kable(table_target_marital, caption = "Admission grade median conditioned both on the Target vraiable and on the Marital status")
@@ -124,20 +126,19 @@ kable(table_target_marital, caption = "Admission grade median conditioned both o
 ### Question  3
 
 ```{r}
-media_curricular_by_gender <- dropout %>%
+media_curricular_by_gender <- dropout |>
   pivot_longer(
     cols = starts_with("Curricular units"),
     names_to = "Curricular",
-    values_to = "Value") %>%
-  group_by(Gender, Curricular) %>%
+    values_to = "Value") |>
+  group_by(Gender, Curricular) |>
   summarize(conditioned_median = median(Value), .groups = 'drop')
-  
 ```
 
 ### Question 4 
 
 ```{r}
-table_gender_curricular <- media_curricular_by_gender %>%
+table_gender_curricular <- media_curricular_by_gender |>
   pivot_wider(names_from = Gender, values_from = conditioned_median)
 
 kable(table_gender_curricular, caption = "Curricular variable median conditioned on the Genders")
