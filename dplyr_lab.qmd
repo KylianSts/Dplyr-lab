@@ -26,9 +26,9 @@ dropout <- readRDS("dropout.Rds")
 theme_set(theme_bw())
 ```
 
-## Exercise 1 
+## Exercise 1
 
-### Question 1 
+### Question 1
 
 ```{r}
 nb_song_name <- spotify |> distinct(song) |> nrow()
@@ -38,12 +38,13 @@ nb_song <- spotify |> distinct(artist, song) |> nrow()
 nb_artist <- spotify |> distinct(artist) |> nrow()
 
 nb_genre <- spotify |> distinct(genre) |> nrow()
-
-cat("There are in this database:", nb_song_name, "different song names,\n")
-cat("but there are in reality:", nb_song, "different songs, made by", nb_artist, "different artists.\n")
-cat("Moreover, there are:", nb_genre, "different genres in this Spotify database.\n")
 ```
-### Question 2 
+
+There are in this database: `r nb_song_name` different song names
+but there are in reality: `r nb_song` different songs, made by `r nb_artist` different artists.
+Moreover, there are:  `r nb_genre` different genres in this Spotify database.
+
+### Question 2
 
 ```{r}
 nb_artist_per_year <- spotify |>
@@ -54,7 +55,7 @@ nb_artist_per_year <- spotify |>
 kable(nb_artist_per_year, caption = "Distinct Artists per Year")
 ```
 
-### Question 3 
+### Question 3
 
 ```{r}
 most_popular_artist <- spotify |>
@@ -65,7 +66,7 @@ most_popular_artist <- spotify |>
 cat("The most popular artist in the dataset is", most_popular_artist$artist, "with", most_popular_artist$number_of_songs, "songs.")
 ```
 
-### Question 4 
+### Question 4
 
 ```{r}
 genre_summary <- spotify |>
@@ -82,7 +83,7 @@ genre_summary <- spotify |>
 kable(genre_summary, caption = "Summary of Tempo by Genre")
 ```
 
-### Question 5 
+### Question 5
 
 ```{r}
 mean_livness_and_danceability_by_year <- spotify |>
@@ -93,8 +94,7 @@ mean_livness_and_danceability_by_year <- spotify |>
 kable(mean_livness_and_danceability_by_year, caption = "Mean of livness and danceability by genre.")
 ```
 
-
-### Question 6 
+### Question 6
 
 ```{r}
 mean_livness_and_danceability_by_year |>
@@ -103,10 +103,9 @@ ggplot(aes(x=year, y=mean, color= liveness_and_danceability)) +
   geom_line(lwd = 1.5)
 ```
 
+## Exercise 2
 
-## Exercise 2 
-
-### Question 1 
+### Question 1
 
 ```{r}
 median_admision_grade_by_target_and_marital_status <- dropout |>
@@ -114,7 +113,7 @@ median_admision_grade_by_target_and_marital_status <- dropout |>
   summarize(conditioned_median = median(`Admission grade`), .groups = 'drop')
 ```
 
-### Question 2 
+### Question 2
 
 ```{r}
 table_target_marital <- median_admision_grade_by_target_and_marital_status |>
@@ -123,7 +122,7 @@ table_target_marital <- median_admision_grade_by_target_and_marital_status |>
 kable(table_target_marital, caption = "Admission grade median conditioned both on the Target vraiable and on the Marital status")
 ```
 
-### Question  3
+### Question 3
 
 ```{r}
 media_curricular_by_gender <- dropout |>
@@ -135,7 +134,7 @@ media_curricular_by_gender <- dropout |>
   summarize(conditioned_median = median(Value), .groups = 'drop')
 ```
 
-### Question 4 
+### Question 4
 
 ```{r}
 table_gender_curricular <- media_curricular_by_gender |>
@@ -143,5 +142,3 @@ table_gender_curricular <- media_curricular_by_gender |>
 
 kable(table_gender_curricular, caption = "Curricular variable median conditioned on the Genders")
 ```
-
-
